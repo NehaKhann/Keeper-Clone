@@ -5,6 +5,7 @@ function CreateArea(props) {
     title: "",
     content: ""
   });
+  const [state, setstate] = useState(false);
   const Storingdata = (event) => {
     const value = event.target.value;
     const name = event.target.name;
@@ -22,16 +23,25 @@ function CreateArea(props) {
       content: ""
     });
   };
+  const expand = () => {
+    setstate(true);
+  };
+  const vanish = () => {
+    setstate(false);
+  };
 
   return (
-    <div className="form">
-      <input
-        name="title"
-        placeholder="Title"
-        value={data.title}
-        onChange={Storingdata}
-        autoComplete="off"
-      />
+    <div className="form" onDoubleClick={vanish}>
+      {state ? (
+        <input
+          name="title"
+          placeholder="Title"
+          value={data.title}
+          onChange={Storingdata}
+          autoComplete="off"
+        />
+      ) : null}
+
       <textarea
         name="content"
         placeholder="Take a note..."
@@ -39,8 +49,9 @@ function CreateArea(props) {
         value={data.content}
         onChange={Storingdata}
         autoComplete="off"
+        onClick={expand}
       />
-      <button onClick={Showingdata}>Add</button>
+      {state ? <button onClick={Showingdata}>Add</button> : null}
     </div>
   );
 }
